@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Leaf, LayoutDashboard, CalendarDays, MessageSquare, Camera, Calculator, GitCompare, Landmark, Menu, X, MapPin, Wheat, Calendar, Globe, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Leaf, LayoutDashboard, CalendarDays, MessageSquare, Camera, Calculator, GitCompare, Landmark, Menu, X, MapPin, Wheat, Calendar, Globe, User, Sun, Moon } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import CalendarView from './components/Calendar';
 import CropCompare from './components/CropCompare';
@@ -23,6 +23,12 @@ function AppInner({ onLogout, authPhone }) {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showRegionModal, setShowRegionModal] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('kisanai_theme') || 'light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('kisanai_theme', theme);
+  }, [theme]);
 
   const selectedCrop = cropsData.find(c => c.id === cropId);
   const selectedRegion = regionsData.find(r => r.id === regionId);
@@ -94,6 +100,12 @@ function AppInner({ onLogout, authPhone }) {
             <span><MapPin size={14}/> {selectedRegion.name}</span>
             <span><Wheat size={14}/> {selectedCrop.name}</span>
             <span><Calendar size={14}/> {month}</span>
+            <button 
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} 
+              style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'var(--text-muted)' }}
+            >
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
           </div>
         </header>
         {activeTab==='dashboard' && <Dashboard region={selectedRegion} crop={selectedCrop} month={month} currentActivity={currentActivity} weather={currentMonthWeather}/>}
