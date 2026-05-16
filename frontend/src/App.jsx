@@ -14,7 +14,7 @@ import { languages } from './data/translations';
 import { cropsData, cropsList } from './data/crops';
 import { regionsData, weatherData, monthsList } from './data/regions';
 
-function AppInner({ onLogout }) {
+function AppInner({ onLogout, authPhone }) {
   const { lang, setLang, t } = useLang();
   const [regionId, setRegionId] = useState('wb');
   const [cropId, setCropId] = useState('rice');
@@ -103,7 +103,7 @@ function AppInner({ onLogout }) {
         {activeTab==='diagnosis' && <PhotoDiagnosis context={context}/>}
         {activeTab==='yield' && <YieldEstimator crop={selectedCrop} regionWeatherData={regionWeather}/>}
         {activeTab==='schemes' && <GovtSchemes/>}
-        {activeTab==='profile' && <Profile onLogout={onLogout} />}
+        {activeTab==='profile' && <Profile onLogout={onLogout} authPhone={authPhone} />}
       </div>
 
       {showRegionModal && (
@@ -137,12 +137,13 @@ function AppInner({ onLogout }) {
 
 function MainApp() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authPhone, setAuthPhone] = useState('');
   
   if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />;
+    return <Login onLogin={(phone) => { setIsAuthenticated(true); setAuthPhone(phone); }} />;
   }
 
-  return <AppInner onLogout={() => setIsAuthenticated(false)} />;
+  return <AppInner onLogout={() => setIsAuthenticated(false)} authPhone={authPhone} />;
 }
 
 export default function App() {

@@ -62,12 +62,12 @@ const Login = ({ onLogin }) => {
       const data = await res.json();
       if (data.success) {
         localStorage.setItem('kisanai_token', data.token);
-        onLogin();
+        onLogin(phone);
       } else {
         setError(data.error || 'Invalid OTP');
       }
     } catch {
-      onLogin();
+      onLogin(phone);
     }
     setLoading(false);
   };
@@ -83,7 +83,7 @@ const Login = ({ onLogin }) => {
       return;
     }
     // Mock PIN verification for demo
-    onLogin();
+    onLogin(phone);
   };
 
   return (

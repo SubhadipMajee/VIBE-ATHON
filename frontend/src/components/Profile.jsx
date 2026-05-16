@@ -2,14 +2,18 @@ import React from 'react';
 import { User, MapPin, Phone, Settings, LogOut, Sprout } from 'lucide-react';
 import { useLang } from '../context/LangContext';
 
-const Profile = ({ onLogout }) => {
+const Profile = ({ onLogout, authPhone }) => {
   const { t, lang } = useLang();
 
-  // Mock user data
+  // Deterministically generate a mock name and land size based on phone number so it feels like a real account
+  const seed = authPhone ? authPhone.split('').reduce((a, b) => a + parseInt(b), 0) : 0;
+  const names = ['Ramesh Kumar', 'Suresh Patel', 'Priya Sharma', 'Amit Singh', 'Vikram Rao'];
+  const sizes = ['2.5 Acres', '5.0 Acres', '1.2 Acres', '10 Acres', '3.5 Acres'];
+  
   const user = {
-    name: 'Ramesh Kumar',
-    phone: '+91 9876543210',
-    landSize: '2.5 Acres',
+    name: names[seed % names.length],
+    phone: authPhone ? `+91 ${authPhone}` : '+91 9876543210',
+    landSize: sizes[seed % sizes.length],
     joined: 'Jan 2024',
     primaryCrop: 'Rice, Wheat'
   };
