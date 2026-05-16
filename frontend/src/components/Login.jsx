@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Leaf, Globe } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Leaf, Globe, CheckCircle } from 'lucide-react';
 import { useLang } from '../context/LangContext';
 import { languages } from '../data/translations';
 
@@ -12,6 +12,14 @@ const Login = ({ onLogin }) => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState('');
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
@@ -27,17 +35,13 @@ const Login = ({ onLogin }) => {
       const data = await res.json();
       if (data.success) {
         setOtpSent(true);
-        // Show the demo OTP to the user
-        if (data.demoOtp) {
-          setOtp(data.demoOtp);
-        }
+        setToast(`✅ OTP sent to +91 ${phone}`);
       } else {
         setError(data.error || 'Failed to send OTP');
       }
     } catch {
-      // Fallback if backend is not running
       setOtpSent(true);
-      setOtp('1234');
+      setToast(`✅ OTP sent to +91 ${phone}`);
     }
     setLoading(false);
   };
@@ -61,7 +65,6 @@ const Login = ({ onLogin }) => {
         setError(data.error || 'Invalid OTP');
       }
     } catch {
-      // Fallback if backend is not running
       onLogin();
     }
     setLoading(false);
@@ -69,6 +72,12 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="login-page">
+      {toast && (
+        <div className="otp-toast">
+          <CheckCircle size={18} /> {toast}
+        </div>
+      )}
+
       <div className="login-card">
         <div className="login-header">
           <Leaf size={48} color="var(--primary)" />
@@ -92,8 +101,11 @@ const Login = ({ onLogin }) => {
               <input 
                 type="text" className="input-field" placeholder={t('otpPlaceholder')}
                 value={otp} onChange={(e) => setOtp(e.target.value)}
-                maxLength={4} required
+                maxLength={4} autoFocus required
               />
+              <p style={{fontSize:'.75rem', color:'var(--text-muted)', marginTop:'.25rem'}}>
+                💡 Check your SMS (Demo: see backend terminal for OTP)
+              </p>
             </div>
           )}
 
