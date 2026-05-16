@@ -373,3 +373,56 @@ body {
   from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
+
+/* ── Modal & Region Grid ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+.modal-content {
+  background: var(--bg);
+  width: 100%;
+  max-width: 600px;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  padding: 1.5rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+.region-card {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.region-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+.region-card.active {
+  border-color: var(--primary);
+  background: #E8F5E9;
+}
+

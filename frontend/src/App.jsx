@@ -21,6 +21,7 @@ function AppInner() {
   const [month, setMonth] = useState(monthsList[currentMonthIndex]);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showRegionModal, setShowRegionModal] = useState(false);
 
   const selectedCrop = cropsData.find(c => c.id === cropId);
   const selectedRegion = regionsData.find(r => r.id === regionId);
@@ -55,9 +56,10 @@ function AppInner() {
             {languages.map(l => <option key={l.code} value={l.code}>{l.label}</option>)}
           </select>
           <label>{t('region')}</label>
-          <select className="selector" value={regionId} onChange={e => setRegionId(e.target.value)}>
-            {regionsData.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
-          </select>
+          <button className="selector" style={{textAlign:'left', cursor:'pointer'}} onClick={() => setShowRegionModal(true)}>
+            <MapPin size={14} style={{verticalAlign:'middle', marginRight:'6px'}}/>
+            {selectedRegion.name}
+          </button>
           <label>{t('crop')}</label>
           <select className="selector" value={cropId} onChange={e => setCropId(e.target.value)}>
             {cropsList.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -100,6 +102,32 @@ function AppInner() {
         {activeTab==='yield' && <YieldEstimator crop={selectedCrop} regionWeatherData={regionWeather}/>}
         {activeTab==='schemes' && <GovtSchemes/>}
       </div>
+
+      {showRegionModal && (
+        <div className="modal-overlay" onClick={() => setShowRegionModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>{t('region') || 'Select Region'}</h3>
+              <button className="close-btn" onClick={() => setShowRegionModal(false)}><X size={20}/></button>
+            </div>
+            <div className="region-grid">
+              {regionsData.map(r => (
+                <div 
+                  key={r.id} 
+                  className={`region-card ${r.id === regionId ? 'active' : ''}`}
+                  onClick={() => { setRegionId(r.id); setShowRegionModal(false); }}
+                >
+                  <MapPin size={24} color={r.id === regionId ? 'var(--primary)' : '#666'} />
+                  <h4>{r.name}</h4>
+                  <p style={{fontSize:'.8rem', color:'#666', marginTop:'4px'}}>
+                    {weatherData[r.id][month].temp}°C | {weatherData[r.id][month].rainfall}mm rain
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
