@@ -79,13 +79,13 @@ h1, h2, h3, h4, h5, h6, .card-value, .topbar-title {
   min-height: 100vh;
 }
 
-/* ── Sidebar (Glassmorphism) ── */
+/* ── Sidebar (Clean & Modern) ── */
 .sidebar {
   width: 280px;
-  background: linear-gradient(165deg, rgba(4, 120, 87, 0.95), rgba(6, 95, 70, 0.98));
+  background: var(--surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: #fff;
+  color: var(--text);
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -93,37 +93,40 @@ h1, h2, h3, h4, h5, h6, .card-value, .topbar-title {
   height: 100vh;
   flex-shrink: 0;
   z-index: 50;
-  box-shadow: 4px 0 24px rgba(0,0,0,0.08);
+  border-right: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
 }
 
 .sidebar-brand {
   padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid var(--border-light);
 }
 .sidebar-brand h1 {
-  font-size: 1.6rem; font-weight: 800; display: flex; align-items: center; gap: 0.6rem;
+  font-size: 1.6rem; font-weight: 800; display: flex; align-items: center; gap: 0.6rem; color: var(--text);
+}
+.sidebar-brand h1 svg {
+  color: var(--primary);
 }
 .sidebar-brand p {
-  font-size: 0.8rem; opacity: 0.8; margin-top: 0.3rem; font-family: 'Inter', sans-serif;
+  font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; font-family: 'Inter', sans-serif;
 }
 
 /* Selectors inside sidebar */
 .sidebar-selectors {
   padding: 1.5rem;
   display: flex; flex-direction: column; gap: 0.6rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid var(--border-light);
 }
 .sidebar-selectors label {
-  font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6; margin-top: 0.4rem;
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-light); margin-top: 0.4rem;
 }
 .sidebar-selectors label:first-child { margin-top: 0; }
 
 .selector {
   width: 100%;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #fff;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
   padding: 0.6rem 0.8rem;
   border-radius: var(--r-sm);
   font-family: 'Inter', sans-serif;
@@ -131,38 +134,33 @@ h1, h2, h3, h4, h5, h6, .card-value, .topbar-title {
   outline: none; cursor: pointer; appearance: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.selector:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); transform: translateY(-1px); }
-.selector:focus { background: rgba(255,255,255,0.2); box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
-.selector option { color: var(--text); background: #fff; }
+.selector:hover { background: var(--surface-alt); border-color: var(--primary-light); transform: translateY(-1px); }
+.selector:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+.selector option { color: var(--text); background: var(--surface); }
 
 /* Nav Links */
 .sidebar-nav {
-  flex: 1; padding: 1rem 0; overflow-y: auto;
+  flex: 1; padding: 1rem 0.75rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.2rem;
 }
 .nav-item {
   display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.85rem 1.5rem;
+  padding: 0.85rem 1rem;
   font-size: 0.9rem; font-weight: 500;
-  color: rgba(255,255,255,0.6);
+  color: var(--text-muted);
   cursor: pointer;
+  border-radius: var(--r-sm);
   transition: all 0.25s ease;
-  border-left: 3px solid transparent;
-  position: relative;
-}
-.nav-item::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent); transition: width 0.3s ease; z-index: -1;
 }
 .nav-item:hover {
-  color: #fff; transform: translateX(4px);
+  color: var(--text); background: var(--surface-alt); transform: translateX(2px);
 }
-.nav-item:hover::before { width: 100%; }
 .nav-item.active {
-  color: #fff; font-weight: 600;
-  border-left-color: var(--primary-light);
-  background: rgba(255,255,255,0.1);
+  color: var(--primary-dark); font-weight: 600;
+  background: var(--primary-glow);
 }
-.nav-item svg { flex-shrink: 0; transition: transform 0.3s ease; }
-.nav-item.active svg { color: var(--primary-light); transform: scale(1.1); }
+.nav-item svg { flex-shrink: 0; transition: transform 0.3s ease; color: var(--text-light); }
+.nav-item:hover svg { color: var(--text); }
+.nav-item.active svg { color: var(--primary); transform: scale(1.1); }
 
 /* ── Page Container ── */
 .page-container {
