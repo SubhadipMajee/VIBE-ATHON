@@ -25,14 +25,34 @@ const Dashboard = ({ region, crop, month, currentActivity, weather }) => {
 
   const activityLabel = t(currentActivity.type) || currentActivity.label;
 
+  const generateSmartAlert = () => {
+    const r = weather.rainfall;
+    const t = weather.temp;
+    const type = currentActivity.type;
+
+    if (r > 150 && type === 'harvest') return { msg: 'Warning: Harvesting during heavy rain causes crop rot. Try to harvest early or ensure dry storage.', type: 'danger' };
+    if (r > 100 && type === 'prep') return { msg: 'Warning: Heavy rainfall will wash away fertilizers. Delay application until rain subsides.', type: 'danger' };
+    if (t > 34 && type === 'sowing') return { msg: 'Warning: High heat can dry out seeds. Ensure deep irrigation before sowing.', type: 'danger' };
+    if (r < 20 && type === 'irrigate') return { msg: 'Warning: Severe dry spell expected. Increase irrigation frequency to prevent crop stress.', type: 'warning' };
+    if (t < 15 && type === 'harvest') return { msg: 'Warning: Low temperatures may delay grain drying. Plan harvesting accordingly.', type: 'warning' };
+    
+    // Fallback to basic weather alerts if no specific activity conflict
+    if (r > 250) return { msg: 'Alert: Extremely heavy rainfall expected this month. Monitor fields for waterlogging.', type: 'danger' };
+    if (t > 36) return { msg: 'Alert: Severe heatwave conditions. Ensure adequate hydration for crops.', type: 'danger' };
+
+    return null;
+  };
+
+  const smartAlert = generateSmartAlert();
+
   return (
     <div className="main-content">
-      {weather.alert && (
-        <div className={`alert-box ${weather.alert.includes('Heatwave') ? 'danger' : ''}`}>
+      {smartAlert && (
+        <div className={`alert-box ${smartAlert.type === 'danger' ? 'danger' : ''}`}>
           <AlertTriangle className="alert-icon" size={22}/>
           <div className="alert-content">
-            <h4 className="alert-title">{t('weatherAlert')}</h4>
-            <p>{weather.alert} {t('thisMonth')}</p>
+            <h4 className="alert-title">{smartAlert.type === 'danger' ? 'Critical Warning' : 'Weather Alert'}</h4>
+            <p>{smartAlert.msg}</p>
           </div>
         </div>
       )}
