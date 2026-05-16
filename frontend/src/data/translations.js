@@ -37,7 +37,8 @@ const t = {
     loginTitle: 'Welcome to KisanAI', loginSub: 'Enter your mobile number to continue',
     phoneLabel: 'Mobile Number', phonePlaceholder: '10-digit mobile number',
     getOtp: 'Get OTP', otpLabel: 'Enter OTP', otpPlaceholder: '4-digit OTP',
-    verifyLogin: 'Verify & Login',
+    verifyLogin: 'Verify & Login', loginWithPin: 'Login with PIN',
+    loginWithOtp: 'Login with OTP', pinLabel: 'Enter 4-Digit PIN', pinPlaceholder: 'Enter PIN',
   },
   hi: {
     appName: 'किसानAI', appSub: 'स्मार्ट खेती मौसमी योजनाकार',
@@ -67,7 +68,8 @@ const t = {
     loginTitle: 'किसानAI में आपका स्वागत है', loginSub: 'जारी रखने के लिए अपना मोबाइल नंबर दर्ज करें',
     phoneLabel: 'मोबाइल नंबर', phonePlaceholder: '10 अंकों का मोबाइल नंबर',
     getOtp: 'OTP प्राप्त करें', otpLabel: 'OTP दर्ज करें', otpPlaceholder: '4 अंकों का OTP',
-    verifyLogin: 'सत्यापित करें और लॉगिन करें',
+    verifyLogin: 'सत्यापित करें और लॉगिन करें', loginWithPin: 'PIN से लॉगिन करें',
+    loginWithOtp: 'OTP से लॉगिन करें', pinLabel: '4-अंकीय PIN दर्ज करें', pinPlaceholder: 'PIN दर्ज करें',
   },
   bn: {
     appName: 'কিষাণAI', appSub: 'স্মার্ট চাষ মৌসুমী পরিকল্পনা',
@@ -97,7 +99,8 @@ const t = {
     loginTitle: 'কিষাণAI তে স্বাগতম', loginSub: 'এগিয়ে যেতে আপনার মোবাইল নম্বর লিখুন',
     phoneLabel: 'মোবাইল নম্বর', phonePlaceholder: '১০-সংখ্যার মোবাইল নম্বর',
     getOtp: 'OTP পান', otpLabel: 'OTP লিখুন', otpPlaceholder: '৪-সংখ্যার OTP',
-    verifyLogin: 'যাচাই করুন এবং লগইন করুন',
+    verifyLogin: 'যাচাই করুন এবং লগইন করুন', loginWithPin: 'PIN দিয়ে লগইন করুন',
+    loginWithOtp: 'OTP দিয়ে লগইন করুন', pinLabel: '৪-সংখ্যার PIN লিখুন', pinPlaceholder: 'PIN লিখুন',
   },
   te: {
     appName: 'కిసాన్AI', appSub: 'స్మార్ట్ వ్యవసాయ సీజనల్ ప్లానర్',
@@ -124,7 +127,8 @@ const t = {
     loginTitle: 'కిసాన్AI కు స్వాగతం', loginSub: 'కొనసాగించడానికి మీ మొబైల్ నంబర్‌ను నమోదు చేయండి',
     phoneLabel: 'మొబైల్ నంబర్', phonePlaceholder: '10-అంకెల మొబైల్ నంబర్',
     getOtp: 'OTP పొందండి', otpLabel: 'OTP నమోదు చేయండి', otpPlaceholder: '4-అంకెల OTP',
-    verifyLogin: 'ధృవీకరించండి & లాగిన్ చేయండి',
+    verifyLogin: 'ధృవీకరించండి & లాగిన్ చేయండి', loginWithPin: 'PIN తో లాగిన్ చేయండి',
+    loginWithOtp: 'OTP తో లాగిన్ చేయండి', pinLabel: '4-అంకెల PIN నమోదు చేయండి', pinPlaceholder: 'PIN నమోదు చేయండి',
   },
   mr: {
     appName: 'किसानAI', appSub: 'स्मार्ट शेती हंगामी नियोजक',
@@ -151,7 +155,8 @@ const t = {
     loginTitle: 'किसानAI मध्ये आपले स्वागत आहे', loginSub: 'पुढे जाण्यासाठी तुमचा मोबाईल क्रमांक टाका',
     phoneLabel: 'मोबाईल क्रमांक', phonePlaceholder: '१० अंकी मोबाईल क्रमांक',
     getOtp: 'OTP मिळवा', otpLabel: 'OTP टाका', otpPlaceholder: '४ अंकी OTP',
-    verifyLogin: 'पडताळणी करा आणि लॉगिन करा',
+    verifyLogin: 'पडताळणी करा आणि लॉगिन करा', loginWithPin: 'PIN ने लॉगिन करा',
+    loginWithOtp: 'OTP ने लॉगिन करा', pinLabel: '४ अंकी PIN टाका', pinPlaceholder: 'PIN टाका',
   },
   ta: {
     appName: 'கிசான்AI', appSub: 'ஸ்மார்ட் விவசாய பருவ திட்டம்',
@@ -178,7 +183,8 @@ const t = {
     loginTitle: 'கிசான்AI க்கு வரவேற்கிறோம்', loginSub: 'தொடர உங்கள் மொபைல் எண்ணை உள்ளிடவும்',
     phoneLabel: 'மொபைல் எண்', phonePlaceholder: '10 இலக்க மொபைல் எண்',
     getOtp: 'OTP பெறு', otpLabel: 'OTP உள்ளிடவும்', otpPlaceholder: '4 இலக்க OTP',
-    verifyLogin: 'சரிபார்த்து உள்நுழையவும்',
+    verifyLogin: 'சரிபார்த்து உள்நுழையவும்', loginWithPin: 'PIN உடன் உள்நுழையவும்',
+    loginWithOtp: 'OTP உடன் உள்நுழையவும்', pinLabel: '4 இலக்க PIN ஐ உள்ளிடவும்', pinPlaceholder: 'PIN ஐ உள்ளிடவும்',
   },
   pa: {
     appName: 'ਕਿਸਾਨAI', appSub: 'ਸਮਾਰਟ ਖੇਤੀ ਮੌਸਮੀ ਯੋਜਨਾ',
@@ -205,7 +211,8 @@ const t = {
     loginTitle: 'ਕਿਸਾਨAI ਵਿੱਚ ਤੁਹਾਡਾ ਸੁਆਗਤ ਹੈ', loginSub: 'ਜਾਰੀ ਰੱਖਣ ਲਈ ਆਪਣਾ ਮੋਬਾਈਲ ਨੰਬਰ ਦਾਖਲ ਕਰੋ',
     phoneLabel: 'ਮੋਬਾਈਲ ਨੰਬਰ', phonePlaceholder: '10-ਅੰਕਾਂ ਦਾ ਮੋਬਾਈਲ ਨੰਬਰ',
     getOtp: 'OTP ਪ੍ਰਾਪਤ ਕਰੋ', otpLabel: 'OTP ਦਾਖਲ ਕਰੋ', otpPlaceholder: '4-ਅੰਕਾਂ ਦਾ OTP',
-    verifyLogin: 'ਤਸਦੀਕ ਕਰੋ ਅਤੇ ਲੌਗਇਨ ਕਰੋ',
+    verifyLogin: 'ਤਸਦੀਕ ਕਰੋ ਅਤੇ ਲੌਗਇਨ ਕਰੋ', loginWithPin: 'PIN ਨਾਲ ਲੌਗਇਨ ਕਰੋ',
+    loginWithOtp: 'OTP ਨਾਲ ਲੌਗਇਨ ਕਰੋ', pinLabel: '4-ਅੰਕਾਂ ਦਾ PIN ਦਾਖਲ ਕਰੋ', pinPlaceholder: 'PIN ਦਾਖਲ ਕਰੋ',
   },
 };
 

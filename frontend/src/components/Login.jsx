@@ -13,6 +13,8 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState('');
+  const [loginMethod, setLoginMethod] = useState('otp'); // 'otp' or 'pin'
+  const [pin, setPin] = useState('');
 
   useEffect(() => {
     if (toast) {
@@ -46,7 +48,7 @@ const Login = ({ onLogin }) => {
     setLoading(false);
   };
 
-  const handleVerify = async (e) => {
+  const handleVerifyOtp = async (e) => {
     e.preventDefault();
     if (otp.length !== 4) return;
     setLoading(true);
@@ -70,6 +72,20 @@ const Login = ({ onLogin }) => {
     setLoading(false);
   };
 
+  const handlePinLogin = (e) => {
+    e.preventDefault();
+    if (phone.length < 10) {
+      setError('Enter valid 10-digit mobile number');
+      return;
+    }
+    if (pin.length !== 4) {
+      setError('PIN must be 4 digits');
+      return;
+    }
+    // Mock PIN verification for demo
+    onLogin();
+  };
+
   return (
     <div className="login-page">
       {toast && (
@@ -85,36 +101,83 @@ const Login = ({ onLogin }) => {
           <p>{t('loginSub')}</p>
         </div>
 
-        <form onSubmit={otpSent ? handleVerify : handleSendOtp} className="login-form">
-          <div className="input-group">
-            <label className="input-label">{t('phoneLabel')}</label>
-            <input 
-              type="tel" className="input-field" placeholder={t('phonePlaceholder')}
-              value={phone} onChange={(e) => setPhone(e.target.value)}
-              disabled={otpSent} required
-            />
-          </div>
-
-          {otpSent && (
-            <div className="input-group" style={{marginTop: '1rem'}}>
-              <label className="input-label">{t('otpLabel')}</label>
+        {loginMethod === 'otp' ? (
+          <form onSubmit={otpSent ? handleVerifyOtp : handleSendOtp} className="login-form">
+            <div className="input-group">
+              <label className="input-label">{t('phoneLabel')}</label>
               <input 
-                type="text" className="input-field" placeholder={t('otpPlaceholder')}
-                value={otp} onChange={(e) => setOtp(e.target.value)}
-                maxLength={4} autoFocus required
+                type="tel" className="input-field" placeholder={t('phonePlaceholder')}
+                value={phone} onChange={(e) => setPhone(e.target.value)}
+                disabled={otpSent} required
               />
-              <p style={{fontSize:'.75rem', color:'var(--text-muted)', marginTop:'.25rem'}}>
-                💡 Check your SMS (Demo: see backend terminal for OTP)
-              </p>
             </div>
-          )}
 
-          {error && <p style={{color: 'var(--danger)', fontSize: '.85rem', marginTop: '.5rem'}}>{error}</p>}
+            {otpSent && (
+              <div className="input-group" style={{marginTop: '1rem'}}>
+                <label className="input-label">{t('otpLabel')}</label>
+                <input 
+                  type="text" className="input-field" placeholder={t('otpPlaceholder')}
+                  value={otp} onChange={(e) => setOtp(e.target.value)}
+                  maxLength={4} autoFocus required
+                />
+                <p style={{fontSize:'.75rem', color:'var(--text-muted)', marginTop:'.25rem'}}>
+                  💡 Check your SMS (Demo: see backend terminal for OTP)
+                </p>
+              </div>
+            )}
 
-          <button type="submit" className="btn-primary" style={{width: '100%', marginTop: '1.5rem'}} disabled={loading}>
-            {loading ? '...' : otpSent ? t('verifyLogin') : t('getOtp')}
+            {error && <p style={{color: 'var(--danger)', fontSize: '.85rem', marginTop: '.5rem'}}>{error}</p>}
+
+            <button type="submit" className="btn-primary" style={{width: '100%', marginTop: '1.5rem'}} disabled={loading}>
+              {loading ? '...' : otpSent ? t('verifyLogin') : t('getOtp')}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handlePinLogin} className="login-form">
+            <div className="input-group">
+              <label className="input-label">{t('phoneLabel')}</label>
+              <input 
+                type="tel" className="input-field" placeholder={t('phonePlaceholder')}
+                value={phone} onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="input-group" style={{marginTop: '1rem'}}>
+              <label className="input-label">{t('pinLabel')}</label>
+              <input 
+                type="password" className="input-field" placeholder={t('pinPlaceholder')}
+                value={pin} onChange={(e) => setPin(e.target.value)}
+                maxLength={4} required
+              />
+            </div>
+
+            {error && <p style={{color: 'var(--danger)', fontSize: '.85rem', marginTop: '.5rem'}}>{error}</p>}
+
+            <button type="submit" className="btn-primary" style={{width: '100%', marginTop: '1.5rem'}}>
+              {t('verifyLogin')}
+            </button>
+          </form>
+        )}
+
+        <div style={{marginTop: '1rem'}}>
+          <button 
+            type="button" 
+            onClick={() => {
+              setLoginMethod(loginMethod === 'otp' ? 'pin' : 'otp');
+              setError('');
+              setOtpSent(false);
+              setOtp('');
+              setPin('');
+            }}
+            style={{
+              background: 'none', border: 'none', color: 'var(--primary-dark)',
+              textDecoration: 'underline', cursor: 'pointer', fontSize: '.9rem'
+            }}
+          >
+            {loginMethod === 'otp' ? t('loginWithPin') : t('loginWithOtp')}
           </button>
-        </form>
+        </div>
 
         <div className="login-lang-selector">
           <Globe size={16} />
