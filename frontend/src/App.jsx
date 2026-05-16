@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Leaf, LayoutDashboard, CalendarDays, MessageSquare, Camera, Calculator, GitCompare, Landmark, Menu, X, MapPin, Wheat, Calendar, Globe } from 'lucide-react';
+import { Leaf, LayoutDashboard, CalendarDays, MessageSquare, Camera, Calculator, GitCompare, Landmark, Menu, X, MapPin, Wheat, Calendar, Globe, User } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import CalendarView from './components/Calendar';
 import CropCompare from './components/CropCompare';
@@ -7,13 +7,14 @@ import KisanChat from './components/KisanChat';
 import PhotoDiagnosis from './components/PhotoDiagnosis';
 import YieldEstimator from './components/YieldEstimator';
 import GovtSchemes from './components/GovtSchemes';
+import Profile from './components/Profile';
 import Login from './components/Login';
 import { LangProvider, useLang } from './context/LangContext';
 import { languages } from './data/translations';
 import { cropsData, cropsList } from './data/crops';
 import { regionsData, weatherData, monthsList } from './data/regions';
 
-function AppInner() {
+function AppInner({ onLogout }) {
   const { lang, setLang, t } = useLang();
   const [regionId, setRegionId] = useState('wb');
   const [cropId, setCropId] = useState('rice');
@@ -38,6 +39,7 @@ function AppInner() {
     { id: 'yield', label: t('yieldEst'), icon: Calculator },
     { id: 'compare', label: t('compareCrops'), icon: GitCompare },
     { id: 'schemes', label: t('govtSchemes'), icon: Landmark },
+    { id: 'profile', label: t('profile') || 'Profile', icon: User },
   ];
 
   const handleNav = (id) => { setActiveTab(id); setSidebarOpen(false); };
@@ -101,6 +103,7 @@ function AppInner() {
         {activeTab==='diagnosis' && <PhotoDiagnosis context={context}/>}
         {activeTab==='yield' && <YieldEstimator crop={selectedCrop} regionWeatherData={regionWeather}/>}
         {activeTab==='schemes' && <GovtSchemes/>}
+        {activeTab==='profile' && <Profile onLogout={onLogout} />}
       </div>
 
       {showRegionModal && (
@@ -139,7 +142,7 @@ function MainApp() {
     return <Login onLogin={() => setIsAuthenticated(true)} />;
   }
 
-  return <AppInner />;
+  return <AppInner onLogout={() => setIsAuthenticated(false)} />;
 }
 
 export default function App() {
